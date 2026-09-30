@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduTrack Pro - Student Attendance Management System</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="text-slate-800 antialiased flex flex-col justify-between min-h-screen">
+
+    <!-- LOGIN SCREEN -->
+    <div id="loginScreen" class="flex-grow flex items-center justify-center p-4 min-h-screen">
+        <div class="dark-glass w-full max-w-md p-8 rounded-2xl shadow-2xl text-white transition-all duration-300 transform hover:scale-[1.01]">
+            <div class="text-center mb-8">
+                <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-indigo-600/30 text-indigo-400 mb-4 border border-indigo-500/30 shadow-lg shadow-indigo-500/20">
+                    <i class="fa-solid fa-graduation-cap text-3xl"></i>
+                </div>
+                <h2 class="text-3xl font-extrabold tracking-tight bg-gradient-to-r from-white via-slate-200 to-indigo-200 bg-clip-text text-transparent">
+                    EduTrack Pro
+                </h2>
+                <p class="text-slate-400 text-sm mt-1">
+                    Sign in to manage student attendance
+                </p>
+            </div>
+
+            <form id="loginForm" class="space-y-5">
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+                        Select Role
+                    </label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <label class="flex items-center justify-center p-3 rounded-xl border border-slate-700 bg-slate-800/60 cursor-pointer hover:border-indigo-500 transition-colors group">
+                            <input type="radio" name="loginRole" value="Teacher" checked class="accent-indigo-500 mr-2">
+                            <span class="text-sm font-medium text-slate-300 group-hover:text-white">Teacher</span>
+                        </label>
+                        <label class="flex items-center justify-center p-3 rounded-xl border border-slate-700 bg-slate-800/60 cursor-pointer hover:border-indigo-500 transition-colors group">
+                            <input type="radio" name="loginRole" value="Administrator" class="accent-indigo-500 mr-2">
+                            <span class="text-sm font-medium text-slate-300 group-hover:text-white">Admin</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="username" class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">
+                        Username / Email
+                    </label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                            <i class="fa-regular fa-user"></i>
+                        </span>
+                        <input type="text" id="username" required placeholder="admin@edutrack.com"
+                               class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-900/80 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm transition-all">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="password" class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">
+                        Password
+                    </label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                            <i class="fa-solid fa-lock"></i>
+                        </span>
+                        <input type="password" id="password" required placeholder="••••••••"
+                               class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-900/80 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm transition-all">
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between text-xs">
+                    <label class="flex items-center text-slate-300 cursor-pointer">
+                        <input type="checkbox" id="rememberMe" class="accent-indigo-500 rounded mr-2 h-4 w-4">
+                        Remember me
+                    </label>
+                    <a href="#" id="forgotPassword" class="text-indigo-400 hover:text-indigo-300 transition-colors">
+                        Forgot password?
+                    </a>
+                </div>
+
+                <button type="submit" class="w-full py-3 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 font-semibold rounded-xl shadow-lg shadow-indigo-600/30 transition-all duration-200 text-sm flex items-center justify-center space-x-2">
+                    <span>Sign In</span>
+                    <i class="fa-solid fa-arrow-right text-xs"></i>
+                </button>
+            </form>
+
+            <div class="mt-6 text-center text-xs text-slate-400">
+                Don't have an account?
+                <button id="showRegisterBtn" class="text-indigo-400 font-semibold hover:underline ml-1">
+                    Register here
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- REGISTRATION SCREEN -->
+    <div id="registerScreen" class="hidden flex-grow flex items-center justify-center p-4 min-h-screen">
+        <div class="dark-glass w-full max-w-lg p-8 rounded-2xl shadow-2xl text-white transition-all duration-300 transform hover:scale-[1.01]">
+            <div class="text-center mb-6">
+                <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-violet-600/30 text-violet-400 mb-3 border border-violet-500/30 shadow-lg shadow-violet-500/20">
+                    <i class="fa-solid fa-user-plus text-2xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold tracking-tight">Create Account</h2>
+                <p class="text-slate-400 text-sm mt-1">Register to start managing student attendance</p>
+            </div>
+
+            <form id="registerForm" class="space-y-4">
+                <div>
+                    <label for="regFullName" class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">Full Name</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                            <i class="fa-regular fa-id-badge"></i>
+                        </span>
+                        <input type="text" id="regFullName" required placeholder="Dr. Sarah Connor"
+                               class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-900/80 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent text-sm">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="regEmail" class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">Email Address</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                            <i class="fa-regular fa-envelope"></i>
+                        </span>
+                        <input type="email" id="regEmail" required placeholder="sarah@school.edu"
+                               class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-900/80 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent text-sm">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="regRole" class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">Role</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                            <i class="fa-solid fa-user-gear"></i>
+                        </span>
+                        <select id="regRole" required class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent text-sm">
+                            <option value="" disabled selected>Select Role</option>
+                            <option value="Teacher">Teacher / Faculty</option>
+                            <option value="Administrator">Administrator</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="regPassword" class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">Password</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                            <i class="fa-solid fa-lock"></i>
+                        </span>
+                        <input type="password" id="regPassword" required placeholder="••••••••"
+                               class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-900/80 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent text-sm">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="regConfirmPassword" class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">Confirm Password</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </span>
+                        <input type="password" id="regConfirmPassword" required placeholder="••••••••"
+                               class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-900/80 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent text-sm">
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full py-3 mt-2 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 font-semibold rounded-xl shadow-lg shadow-violet-600/30 transition-all duration-200 text-sm flex items-center justify-center space-x-2">
+                    <span>Register Account</span>
+                    <i class="fa-solid fa-user-check text-xs"></i>
+                </button>
+            </form>
+
+            <div class="mt-6 text-center text-xs text-slate-400">
+                Already registered?
+                <button id="showLoginBtn" class="text-violet-400 font-semibold hover:underline ml-1">
+                    Sign in here
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- DASHBOARD SCREEN -->
+    <div id="dashboardScreen" class="hidden flex-grow flex flex-col min-h-screen bg-slate-50">
+
+        <header class="bg-slate-900 border-b border-slate-800 text-white sticky top-0 z-40 shadow-md">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-gradient-to-tr from-indigo-600 to-violet-600 p-2.5 rounded-xl shadow-md">
+                        <i class="fa-solid fa-clipboard-user text-white text-lg"></i>
+                    </div>
+                    <div>
+                        <span class="font-bold text-lg tracking-tight block leading-tight">EduTrack Pro</span>
+                        <span class="text-[10px] text-slate-400 uppercase tracking-widest block font-medium">Attendance Management</span>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center space-x-3 border-r border-slate-700/80 pr-4">
+                        <div class="w-9 h-9 rounded-xl bg-indigo-500/20 border border-indigo-400/30 text-indigo-300 flex items-center justify-center font-bold text-sm shadow-inner">
+                            <span id="userInitial">T</span>
+                        </div>
+                        <div class="hidden sm:block text-left">
+                            <div id="displayUser" class="text-xs font-semibold leading-tight text-slate-100">Teacher</div>
+                            <div id="displayRole" class="text-[10px] text-indigo-400 font-medium">Faculty Admin</div>
+                        </div>
+                    </div>
+                    <button id="logoutBtn" class="text-slate-400 hover:text-rose-400 transition-colors text-sm font-medium flex items-center space-x-1.5 px-3 py-1.5 rounded-lg hover:bg-slate-800">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        <span class="hidden sm:inline">Logout</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+                <div class="glass-panel p-5 rounded-2xl flex items-center justify-between border-l-4 border-indigo-500">
+                    <div>
+                        <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Total Students</p>
+                        <h3 id="statTotal" class="text-3xl font-extrabold text-slate-800 mt-1">0</h3>
+                        <span class="text-[11px] text-indigo-600 font-medium">Enrolled in class</span>
+                    </div>
+                    <div class="w-12 h-12 bg-indigo-50 rounded-2xl flex items-center justify-center text-indigo-600 text-xl shadow-sm">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                </div>
+                <div class="glass-panel p-5 rounded-2xl flex items-center justify-between border-l-4 border-emerald-500">
+                    <div>
+                        <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Present Today</p>
+                        <h3 id="statPresent" class="text-3xl font-extrabold text-emerald-600 mt-1">0</h3>
+                        <span class="text-[11px] text-emerald-600 font-medium" id="presentSubtext">Checked in</span>
+                    </div>
+                    <div class="w-12 h-12 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-600 text-xl shadow-sm">
+                        <i class="fa-solid fa-user-check"></i>
+                    </div>
+                </div>
+                <div class="glass-panel p-5 rounded-2xl flex items-center justify-between border-l-4 border-rose-500">
+                    <div>
+                        <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Absent Today</p>
+                        <h3 id="statAbsent" class="text-3xl font-extrabold text-rose-600 mt-1">0</h3>
+                        <span class="text-[11px] text-rose-500 font-medium" id="absentSubtext">Not checked in</span>
+                    </div>
+                    <div class="w-12 h-12 bg-rose-50 rounded-2xl flex items-center justify-center text-rose-600 text-xl shadow-sm">
+                        <i class="fa-solid fa-user-xmark"></i>
+                    </div>
+                </div>
+                <div class="glass-panel p-5 rounded-2xl flex items-center justify-between border-l-4 border-violet-500">
+                    <div>
+                        <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Attendance Rate</p>
+                        <h3 id="statRate" class="text-3xl font-extrabold text-violet-600 mt-1">0%</h3>
+                        <div class="w-28 bg-slate-200 h-1.5 rounded-full mt-2 overflow-hidden">
+                            <div id="statProgressBar" class="bg-violet-600 h-1.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div class="w-12 h-12 bg-violet-50 rounded-2xl flex items-center justify-center text-violet-600 text-xl shadow-sm">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-panel p-6 rounded-2xl mb-8 space-y-4">
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+                    <div class="flex items-center space-x-3">
+                        <label for="attendanceDate" class="text-sm font-semibold text-slate-700 whitespace-nowrap flex items-center">
+                            <i class="fa-regular fa-calendar-check text-indigo-600 text-base mr-2"></i>
+                            Date:
+                        </label>
+                        <input type="date" id="attendanceDate"
+                               class="bg-slate-100/80 border border-slate-300 rounded-xl px-3.5 py-2 text-sm text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm">
+                    </div>
+                    <div class="flex items-center space-x-2 flex-grow max-w-md">
+                        <div class="relative flex-grow">
+                            <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                                <i class="fa-solid fa-user-plus text-xs"></i>
+                            </span>
+                            <input type="text" id="studentName" placeholder="Enter student full name..."
+                                   class="w-full pl-9 pr-4 py-2 rounded-xl bg-slate-100/80 border border-slate-300 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        </div>
+                        <button id="addStudentBtn" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-medium text-sm transition-colors shadow-sm whitespace-nowrap flex items-center space-x-1.5">
+                            <i class="fa-solid fa-plus text-xs"></i>
+                            <span>Add</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="flex flex-col md:flex-row items-center justify-between gap-4 pt-1">
+                    <div class="relative w-full md:w-72">
+                        <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                            <i class="fa-solid fa-magnifying-glass text-xs"></i>
+                        </span>
+                        <input type="text" id="searchInput" placeholder="Search by name..."
+                               class="w-full pl-9 pr-4 py-2 rounded-xl bg-slate-100/80 border border-slate-300 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    </div>
+                    <div class="flex flex-wrap items-center gap-2 w-full md:w-auto justify-end">
+                        <button id="markAllPresentBtn" class="px-3 py-1.5 bg-emerald-100 hover:bg-emerald-200 text-emerald-700 rounded-lg text-xs font-semibold transition-colors flex items-center space-x-1">
+                            <i class="fa-solid fa-check"></i>
+                            <span>All Present</span>
+                        </button>
+                        <button id="markAllAbsentBtn" class="px-3 py-1.5 bg-rose-100 hover:bg-rose-200 text-rose-700 rounded-lg text-xs font-semibold transition-colors flex items-center space-x-1">
+                            <i class="fa-solid fa-xmark"></i>
+                            <span>All Absent</span>
+                        </button>
+                        <button id="clearAttendanceBtn" class="px-3 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-lg text-xs font-semibold transition-colors flex items-center space-x-1">
+                            <i class="fa-solid fa-rotate-left"></i>
+                            <span>Clear Date</span>
+                        </button>
+                        <button id="exportCsvBtn" class="px-3 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-lg text-xs font-semibold border border-indigo-200 transition-colors flex items-center space-x-1">
+                            <i class="fa-solid fa-file-csv"></i>
+                            <span>Export CSV</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-panel rounded-2xl overflow-hidden shadow-sm">
+                <div class="overflow-x-auto">
+                    <table id="attendanceTable" class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-900 text-slate-300 text-xs uppercase tracking-wider">
+                                <th class="py-4 px-6 font-semibold">S.No.</th>
+                                <th class="py-4 px-6 font-semibold">Student Name</th>
+                                <th class="py-4 px-6 font-semibold text-center">Status Toggle</th>
+                                <th class="py-4 px-6 font-semibold text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200 text-sm">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="toastContainer" class="fixed bottom-5 right-5 z-50 space-y-2 pointer-events-none"></div>
+
+    <!-- Custom JS -->
+    <script src="script.js"></script>
+</body>
+</html>
